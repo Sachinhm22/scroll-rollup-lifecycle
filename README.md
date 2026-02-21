@@ -157,35 +157,13 @@ Mistaking "confirmed" for "finalized" can lead to incorrect system guarantees.
 
 ## Simplified Lifecycle Diagram
 
-```text
-+-------------------+
-|       User        |
-+---------+---------+
-          |
-          v
-+-------------------+
-|   L2 Sequencer    |
-| (Executes txs &   |
-|  creates blocks)  |
-+---------+---------+
-          |
-          v
-+-------------------+
-|    Rollup Node    |
-| (Forms batches)   |
-+---------+---------+
-          |
-          v
-+-------------------+
-|   L1 Commit Tx    |
-| (Data available)  |
-+---------+---------+
-          |
-          v
-+-------------------+
-| L1 Finalize Tx    |
-| (Proof verified)  |
-+-------------------+
+
+```mermaid
+flowchart TD
+    A[User] --> B[L2 Sequencer<br/>Executes & Produces Blocks]
+    B --> C[Rollup Node<br/>Forms Batches]
+    C --> D[L1 Commit Tx<br/>Data Availability]
+    D --> E[L1 Finalize Tx<br/>Validity Proof Verified]
 ```
 
 This diagram intentionally abstracts away prover internals to emphasize lifecycle boundaries between execution, data availability, and finality.        
