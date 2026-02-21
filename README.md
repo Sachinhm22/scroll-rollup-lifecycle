@@ -9,11 +9,11 @@ It provides a lifecycle-first mental model for infrastructure engineers, focusin
 ---
 ## Why This Document Exists
 
-The official Scroll documentation explains execution, batching, and proving in modular sections.  
+The official Scroll documentation explains execution, batching, and proving in separate technical sections.
 
-However, for new infrastructure engineers, it can be difficult to follow a single transaction linearly across system boundaries.
+While accurate and detailed, this modular structure makes it difficult to trace a single transaction end-to-end across system boundaries.
 
-This document provides a lifecycle-first view of the system — focusing on how one transaction moves from submission to finality — without diving into upgrade history or prover internals.
+This document introduces a lifecycle-first abstraction that connects those components into one linear flow — making transaction state transitions explicit and easier to reason about for infrastructure engineers.
 
 ## Architectural Scope
 
