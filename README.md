@@ -123,7 +123,13 @@ Finalized transactions are:
 
 ## Lifecycle Summary
 
-(text)
+### Transaction State Transitions
+
+| Stage       | Trigger                                   | Security Level                  |
+|------------|--------------------------------------------|----------------------------------|
+| Confirmed  | Included in L2 block by sequencer          | Soft confirmation (L2 consensus) |
+| Committed  | Batch data posted to Ethereum (L1 commit)  | Data available on L1             |
+| Finalized  | Validity proof verified on Ethereum        | Full Ethereum security           |
 
 ## Simplified Lifecycle Diagram
         +-------------------+
