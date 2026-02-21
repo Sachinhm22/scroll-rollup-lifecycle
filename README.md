@@ -7,6 +7,13 @@ This document explains, in a clear and linear way, how a single transaction move
 It is written for new infrastructure engineers who want a system-level mental model of how Scroll connects execution, batching, data availability, and proof verification.
 
 ---
+## Why This Document Exists
+
+The official Scroll documentation explains execution, batching, and proving in modular sections.  
+
+However, for new infrastructure engineers, it can be difficult to follow a single transaction linearly across system boundaries.
+
+This document provides a lifecycle-first view of the system — focusing on how one transaction moves from submission to finality — without diving into upgrade history or prover internals.
 
 ## 1. Transaction Enters the System
 
