@@ -15,6 +15,17 @@ However, for new infrastructure engineers, it can be difficult to follow a singl
 
 This document provides a lifecycle-first view of the system — focusing on how one transaction moves from submission to finality — without diving into upgrade history or prover internals.
 
+## Architectural Scope
+
+This document focuses strictly on the transaction lifecycle across system boundaries:
+
+- L2 execution
+- L2 batching
+- L1 data availability
+- L1 proof verification
+
+It intentionally excludes upgrade mechanics, prover implementation details, and contract-level parameter definitions.
+
 ## 1. Transaction Enters the System
 
 A transaction can enter Scroll in two ways:
@@ -131,6 +142,17 @@ Finalized transactions are:
 | Committed  | Batch data posted to Ethereum (L1 commit)  | Data available on L1             |
 | Finalized  | Validity proof verified on Ethereum        | Full Ethereum security           |
 
+## Why Builders Should Care
+
+Understanding the transaction lifecycle helps you:
+
+- Design reliable indexers
+- Monitor transaction states correctly
+- Handle withdrawal UX accurately
+- Build infrastructure tools with correct finality assumptions
+
+Mistaking "confirmed" for "finalized" can lead to incorrect system guarantees.
+
 ## Simplified Lifecycle Diagram
         +-------------------+
         |       User        |
@@ -190,3 +212,9 @@ This modular structure enables:
 - Clear state transitions for infrastructure systems
 
 Understanding this lifecycle is foundational for anyone building, indexing, or operating infrastructure on Scroll.
+
+## Comparison to Optimistic Rollups
+
+Unlike optimistic rollups, Scroll does not rely on fraud proofs or challenge periods.
+
+Finality is achieved through validity proofs verified on Ethereum, which removes the need for delayed withdrawal windows and dispute resolution mechanisms.
