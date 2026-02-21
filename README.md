@@ -116,6 +116,40 @@ Finalized transactions are:
 
 ## Lifecycle Summary
 
+(text)
+
+## Simplified Lifecycle Diagram
+        +-------------------+
+        |       User        |
+        +---------+---------+
+                  |
+                  v
+        +-------------------+
+        |   L2 Sequencer    |
+        | (Executes txs &   |
+        |  creates blocks)  |
+        +---------+---------+
+                  |
+                  v
+        +-------------------+
+        |    Rollup Node    |
+        | (Forms batches)   |
+        +---------+---------+
+                  |
+                  v
+        +-------------------+
+        |   L1 Commit Tx    |
+        | (Data available)  |
+        +---------+---------+
+                  |
+                  v
+        +-------------------+
+        | L1 Finalize Tx    |
+        | (Proof verified)  |
+        +-------------------+
+
+This diagram intentionally abstracts away prover internals to emphasize lifecycle boundaries between execution, data availability, and finality.        
+
 A transaction on Scroll moves through three states:
 
 1. **Confirmed** – Included in an L2 block.
