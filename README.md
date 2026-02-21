@@ -2,9 +2,9 @@
 
 ## Overview
 
-This document explains, in a clear and linear way, how a single transaction moves through the Scroll rollup pipeline — from submission to finalization on Ethereum.
+This document traces a single transaction through Scroll’s rollup pipeline — from submission to Ethereum finality.
 
-It is written for new infrastructure engineers who want a system-level mental model of how Scroll connects execution, batching, data availability, and proof verification.
+It provides a lifecycle-first mental model for infrastructure engineers, focusing on execution, batching, data availability, and validity verification across system boundaries.
 
 ---
 ## Why This Document Exists
@@ -26,7 +26,7 @@ This document focuses strictly on the transaction lifecycle across system bounda
 
 It intentionally excludes upgrade mechanics, prover implementation details, and contract-level parameter definitions.
 
-## 1. Transaction Enters the System
+## 1. Ingress: How Transactions Enter Scroll
 
 A transaction can enter Scroll in two ways:
 
@@ -136,11 +136,11 @@ Finalized transactions are:
 
 ### Transaction State Transitions
 
-| Stage       | Trigger                                   | Security Level                  |
+| Lifecycle Stage | Trigger | Trust Assumption |
 |------------|--------------------------------------------|----------------------------------|
-| Confirmed  | Included in L2 block by sequencer          | Soft confirmation (L2 consensus) |
-| Committed  | Batch data posted to Ethereum (L1 commit)  | Data available on L1             |
-| Finalized  | Validity proof verified on Ethereum        | Full Ethereum security           |
+| Confirmed  | Included in L2 block by sequencer | Trust = Sequencer ordering |
+| Committed  | Batch data posted to Ethereum (L1 commit) | Trust = Data available on L1 |
+| Finalized  | Validity proof verified on Ethereum | Trust = Ethereum verification |
 
 ## Why Builders Should Care
 
@@ -154,42 +154,41 @@ Understanding the transaction lifecycle helps you:
 Mistaking "confirmed" for "finalized" can lead to incorrect system guarantees.
 
 ## Simplified Lifecycle Diagram
-        +-------------------+
-        |       User        |
-        +---------+---------+
-                  |
-                  v
-        +-------------------+
-        |   L2 Sequencer    |
-        | (Executes txs &   |
-        |  creates blocks)  |
-        +---------+---------+
-                  |
-                  v
-        +-------------------+
-        |    Rollup Node    |
-        | (Forms batches)   |
-        +---------+---------+
-                  |
-                  v
-        +-------------------+
-        |   L1 Commit Tx    |
-        | (Data available)  |
-        +---------+---------+
-                  |
-                  v
-        +-------------------+
-        | L1 Finalize Tx    |
-        | (Proof verified)  |
-        +-------------------+
+
+## Simplified Lifecycle Diagram
+
+```text
++-------------------+
+|       User        |
++---------+---------+
+          |
+          v
++-------------------+
+|   L2 Sequencer    |
+| (Executes txs &   |
+|  creates blocks)  |
++---------+---------+
+          |
+          v
++-------------------+
+|    Rollup Node    |
+| (Forms batches)   |
++---------+---------+
+          |
+          v
++-------------------+
+|   L1 Commit Tx    |
+| (Data available)  |
++---------+---------+
+          |
+          v
++-------------------+
+| L1 Finalize Tx    |
+| (Proof verified)  |
++-------------------+
+```
 
 This diagram intentionally abstracts away prover internals to emphasize lifecycle boundaries between execution, data availability, and finality.        
-
-A transaction on Scroll moves through three states:
-
-1. **Confirmed** – Included in an L2 block.
-2. **Committed** – Batch data posted to Ethereum.
-3. **Finalized** – Validity proof verified on Ethereum.
 
 This separation allows Scroll to:
 - Provide fast execution on L2.
